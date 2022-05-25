@@ -23,7 +23,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 13px 116px;
+  padding: 13px 16px;
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
@@ -78,7 +78,7 @@
   align-items: center;
   background: #30c58d;
   border-radius: 8px;
-  padding: 13px 116px;
+  padding: 13px 16px;
   border: none;
   outline: none;
   color: #fefefe;
