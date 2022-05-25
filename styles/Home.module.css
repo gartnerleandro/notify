@@ -3,3 +3,8 @@
   display: flex;
   flex-direction: row;
 }
+
+.main {
+  flex: 1;
+  margin: 40px 112px;
+}
