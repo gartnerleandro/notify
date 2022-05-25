@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInAnonymously,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import {
   getLocalValue,
@@ -38,18 +39,28 @@ export const loginAnonymously = (username) => {
   return signInAnonymously(auth);
 };
 
-export const onAuthChanged = onAuthStateChanged(auth, (user) => {
-  const currentUser = getLocalValue("user");
+export const onAuthChanged = (onChange) =>
+  onAuthStateChanged(auth, (user) => {
+    const currentUser = getLocalValue("user");
 
-  if (user) {
-    setLocalValue("user", {
-      userId: user.uid,
-      username: user.displayName || currentUser?.username || null,
-    });
-  } else {
-    removeLocalElement("user");
-  }
-});
+    if (user) {
+      const newUser = {
+        userId: user.uid,
+        username: user.displayName || currentUser?.username || null,
+      };
+
+      setLocalValue("user", newUser);
+
+      if (!user.displayName && newUser.username) {
+        updateProfile(user, { displayName: newUser.username });
+      }
+
+      onChange(newUser);
+    } else {
+      removeLocalElement("user");
+      onChange(null);
+    }
+  });
 
 export const onLogout = () => {
   return signOut(auth);
